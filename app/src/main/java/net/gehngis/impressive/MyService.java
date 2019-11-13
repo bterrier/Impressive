@@ -9,18 +9,30 @@ import android.util.Log;
 
 public class MyService extends NotificationListenerService {
     public MyService() {
-
+        sounds = new Ringtone[9];
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        doubleKill = RingtoneManager.getRingtone(getApplicationContext(),
+        sounds[0] = RingtoneManager.getRingtone(getApplicationContext(),
                 Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.double_kill));
-        tripleKill = RingtoneManager.getRingtone(getApplicationContext(),
+        sounds[1] = RingtoneManager.getRingtone(getApplicationContext(),
                 Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.triple_kill));
-        overkill = RingtoneManager.getRingtone(getApplicationContext(),
+        sounds[2] = RingtoneManager.getRingtone(getApplicationContext(),
                 Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.overkill));
+        sounds[3] = RingtoneManager.getRingtone(getApplicationContext(),
+                Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.killtacular));
+        sounds[4] = RingtoneManager.getRingtone(getApplicationContext(),
+                Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.killtrocity));
+        sounds[5] = RingtoneManager.getRingtone(getApplicationContext(),
+                Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.killimanjaro));
+        sounds[6] = RingtoneManager.getRingtone(getApplicationContext(),
+                Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.killtastrophe));
+        sounds[7] = RingtoneManager.getRingtone(getApplicationContext(),
+                Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.killpocalypse));
+        sounds[8] = RingtoneManager.getRingtone(getApplicationContext(),
+                Uri.parse("android.resource://net.gehngis.impressive/" + R.raw.killionaire));
     }
 
     @Override
@@ -68,22 +80,17 @@ public class MyService extends NotificationListenerService {
     }
 
     private Ringtone getRingtone(int count) {
-        switch (count) {
-            case 0:
-            case 1:
-                return null;
+        if (count < 2)
+            return null;
 
-            case 2:
-                return doubleKill;
-            case 3:
-                    return tripleKill;
-        }
-        return overkill;
+        int index = count - 2; //Double kill is at index 0
+        if (index >= sounds.length)
+            index = sounds.length - 1;
+
+        return sounds[index];
     }
 
-    Ringtone doubleKill;
-    Ringtone tripleKill;
-    Ringtone overkill;
+    Ringtone sounds[];
 
 
 }
